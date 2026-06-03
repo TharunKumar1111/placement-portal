@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saved Jobs</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>Placement Portal</h2>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/jobs">Jobs</a>
+        <a href="/saved_jobs">Saved Jobs</a>
+        <a href="/interviews">Interviews</a>
+        <a href="/notifications">Notifications</a>
+        <a href="/my_applications">Applications</a>
+        <a href="/profile">Profile</a>
+        {% if profile_photo %}
+
+    <img
+    src="{{ url_for('static',
+    filename='profile_photos/' + profile_photo) }}"
+    width="40"
+    height="40"
+    style="border-radius:50%; object-fit:cover;">
+
+{% endif %}
+        <a href="/logout">Logout</a>
+
+        <button onclick="darkMode()" class="dark-btn">
+            🌙
+        </button>
+    </div>
+
+</div>
+
+<h1>Saved Jobs</h1>
+
+<div class="box wide-box">
+
+    {% if jobs %}
+
+        {% for job in jobs %}
+
+            <div class="job-card">
+
+                <h3>{{ job[1] }}</h3>
+
+                <p>Role: {{ job[2] }}</p>
+
+                <p>Package: {{ job[3] }}</p>
+
+                
+                <p>Deadline: {{ job[5] }}</p>
+
+<a href="/remove_saved_job/{{ job[0] }}">
+    <button type="button">
+        Remove
+    </button>
+</a>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty-state">
+            <h3>No saved jobs</h3>
+            <p>Save jobs from the jobs page to view them here.</p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+<footer>
+    Developed by Tharun
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

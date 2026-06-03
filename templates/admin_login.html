@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div style="text-align:right; padding:20px;">
+
+    <button onclick="darkMode()" class="dark-btn">
+    🌙
+</button>
+
+</div>
+
+<h1>College Placement Portal</h1>
+
+<div class="box">
+
+    <h2>Admin Login</h2>
+
+    <form method="POST" action="/admin_login">
+
+        <input type="text"
+        name="username"
+        placeholder="Admin Username"
+        required>
+
+        <input type="password"
+        name="password"
+        placeholder="Admin Password"
+        required>
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+    <p>
+        <a href="/">Back to Student Login</a>
+    </p>
+
+</div>
+
+<footer>
+    Developed by Tharun
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

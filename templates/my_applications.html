@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Applications</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>Placement Portal</h2>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/jobs">Jobs</a>
+        <a href="/saved_jobs">Saved Jobs</a>
+        <a href="/my_applications">Applications</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+        <button onclick="darkMode()" class="dark-btn">
+    🌙
+</button>
+    </div>
+
+</div>
+
+
+
+<h1>My Applications</h1>
+
+<div class="box">
+
+    {% if jobs %}
+
+        {% for job in jobs %}
+
+            <div class="job-card">
+
+                <h3>{{ job[0] }}</h3>
+
+                <p>Role: {{ job[1] }}</p>
+
+                <p>Package: {{ job[2] }}</p>
+
+                <p>
+    Status:
+    <span class="status-badge
+    {% if job[3] == 'Selected' %}
+    selected-badge
+    {% elif job[3] == 'Rejected' %}
+    rejected-badge
+    {% else %}
+    pending-badge
+    {% endif %}
+    ">
+        {{ job[3] }}
+    </span>
+</p>
+
+                <p>Resume: {{ job[4] }}</p>
+
+                <p>Applied Date: {{ job[5] }}</p>
+                <p>Resume Score: {{ job[6] }}/100</p>
+                <a href="/withdraw_application/{{ job[7] }}">
+    <button type="button">
+        Withdraw Application
+    </button>
+</a>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty-state">
+    <h3>No applications yet</h3>
+    <p>Browse jobs and apply to companies.</p>
+
+    <a href="/jobs">
+        <button>Browse Jobs</button>
+    </a>
+</div>
+
+    {% endif %}
+
+</div>
+
+<footer>
+    Developed by Tharun
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

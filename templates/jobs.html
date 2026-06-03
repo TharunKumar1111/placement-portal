@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Companies</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>Placement Portal</h2>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/jobs">Jobs</a>
+        <a href="/saved_jobs">Saved Jobs</a>
+        <a href="/interviews">Interviews</a>
+        <a href="/notifications">Notifications</a>
+        <a href="/my_applications">Applications</a>
+        <a href="/profile">Profile</a>
+        {% if profile_photo %}
+
+    <img
+    src="{{ url_for('static',
+    filename='profile_photos/' + profile_photo) }}"
+    width="40"
+    height="40"
+    style="border-radius:50%; object-fit:cover;">
+
+{% endif %}
+        <a href="/logout">Logout</a>
+        <button onclick="darkMode()" class="dark-btn">
+    🌙
+</button>
+    </div>
+
+</div>
+
+
+<h1>Company Listings</h1>
+
+<div class="box wide-box">
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="flash">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+    <form method="GET" action="/jobs">
+
+        <input type="text"
+        name="search"
+        value="{{ request.args.get('search', '') }}"
+        placeholder="Search company, role, package or deadline">
+
+        <select name="company">
+
+            <option value="">
+                All Companies
+            </option>
+
+            {% for company in companies %}
+
+                <option value="{{ company[0] }}"
+                {% if request.args.get('company') == company[0] %}
+                selected
+                {% endif %}>
+                    {{ company[0] }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button type="submit">
+            Search
+        </button>
+
+        <a href="/jobs">
+            <button type="button">
+                Clear
+            </button>
+        </a>
+
+    </form>
+
+    {% if jobs %}
+
+        {% for job in jobs %}
+
+            <div class="job-card">
+
+                <img
+                src="{{ url_for('static',
+                filename='logos/' + job[4]) }}"
+                width="80">
+
+                <h3>{{ job[1] }}</h3>
+
+                <p>Role: {{ job[2] }}</p>
+
+                <p>Package: {{ job[3] }}</p>
+
+                <p>Deadline: {{ job[5] }}</p>
+
+                <p>Applicants: {{ job[6] }}</p>
+                <p>Skill Match: {{ job[7] }}%</p>
+                <p>
+    Deadline Status:
+    <span class="status-badge
+    {% if job[8] == 'Open' %}
+    selected-badge
+    {% elif job[8] == 'Closed' %}
+    rejected-badge
+    {% else %}
+    pending-badge
+    {% endif %}
+    ">
+        {{ job[8] }}
+    </span>
+</p>
+<a href="/job_details/{{ job[0] }}">
+    <button type="button">
+        View Details
+    </button>
+</a>
+<a href="/save_job/{{ job[0] }}">
+    <button type="button">
+        Save Job
+    </button>
+</a>
+
+                {% if job[8] == 'Closed' %}
+
+    <button type="button" disabled>
+        Apply Closed
+    </button>
+
+{% else %}
+
+    {% if job[9] %}
+
+    <button type="button" disabled>
+        Already Applied
+    </button>
+
+{% elif job[8] == 'Closed' %}
+
+    <button type="button" disabled>
+        Apply Closed
+    </button>
+
+{% else %}
+
+    <form method="POST"
+    action="/apply"
+    enctype="multipart/form-data">
+
+        <input type="hidden"
+        name="job_id"
+        value="{{ job[0] }}">
+
+        <input type="file"
+        name="resume"
+        required>
+
+        <button type="submit">
+            Apply Now
+        </button>
+
+    </form>
+
+{% endif %}
+
+{% endif %}
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty-state">
+            <h3>No jobs found</h3>
+            <p>Try searching with another company, role, package, or deadline.</p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+<footer>
+    Developed by Tharun
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

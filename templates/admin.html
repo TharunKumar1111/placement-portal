@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>Admin Panel</h2>
+
+    <div>
+        <a href="/admin">Dashboard</a>
+        <a href="/applicants">Applicants</a>
+        <a href="/admin_logout">Logout</a>
+
+        <button onclick="darkMode()" class="dark-btn">
+    🌙
+</button>
+    </div>
+
+</div>
+
+<h1>College Placement Portal</h1>
+
+<div class="box">
+
+    <h2>Portal Statistics</h2>
+
+    <div class="stats">
+
+        <div class="stats-card">
+            <h3>{{ total_students }}</h3>
+            <p>Students</p>
+        </div>
+
+        <div class="stats-card">
+            <h3>{{ total_jobs }}</h3>
+            <p>Jobs</p>
+        </div>
+
+        <div class="stats-card">
+            <h3>{{ total_applications }}</h3>
+            <p>Applications</p>
+        </div>
+        <div class="stats-card">
+    <h3>{{ pending_count }}</h3>
+    <p>Pending</p>
+</div>
+
+<div class="stats-card">
+    <h3>{{ selected_count }}</h3>
+    <p>Selected</p>
+</div>
+
+<div class="stats-card">
+    <h3>{{ rejected_count }}</h3>
+    <p>Rejected</p>
+</div>
+
+    </div>
+
+    <canvas id="myChart"></canvas>
+
+</div>
+
+<div class="box">
+
+    <h2>Add New Job</h2>
+
+    <form method="POST" action="/add_job" enctype="multipart/form-data"></form>
+
+        <input type="text"
+        name="company"
+        placeholder="Company Name"
+        required>
+
+        <input type="text"
+        name="role"
+        placeholder="Role"
+        required>
+
+        <input type="text"
+        name="package"
+        placeholder="Package"
+        required>
+
+        <input type="date"
+        name="deadline"
+        required>
+        <input type="file"
+name="logo"
+accept="image/*">
+
+        <button type="submit">
+            Add Job
+        </button>
+
+    </form>
+
+</div>
+
+<div class="box wide-box">
+
+    <h2>Manage Jobs</h2>
+
+    {% if jobs %}
+
+        {% for job in jobs %}
+
+            <div class="job-card">
+
+                <h3>{{ job[1] }}</h3>
+
+                <p>Role: {{ job[2] }}</p>
+
+                <p>Package: {{ job[3] }}</p>
+
+                <p>Deadline: {{ job[5] }}</p>
+
+                <div class="button-group">
+
+                    <a href="/edit_job/{{ job[0] }}">
+                        <button>Edit</button>
+                    </a>
+
+                    <a href="/delete_job/{{ job[0] }}">
+                        <button>Delete</button>
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty-state">
+            <h3>No jobs added yet</h3>
+            <p>Add a new job using the form above.</p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+<footer>
+    Developed by Tharun
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script>
+
+const ctx = document.getElementById('myChart');
+
+new Chart(ctx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: [
+    'Students',
+    'Jobs',
+    'Applications',
+    'Pending',
+    'Selected',
+    'Rejected'
+],
+
+        datasets: [{
+
+            label: 'Portal Statistics',
+
+           data: [
+    Number("{{ total_students }}"),
+    Number("{{ total_jobs }}"),
+    Number("{{ total_applications }}"),
+    Number("{{ pending_count }}"),
+    Number("{{ selected_count }}"),
+    Number("{{ rejected_count }}")
+],
+
+            borderWidth: 1
+
+        }]
+    },
+
+    options: {
+
+        scales: {
+
+            y: {
+                beginAtZero: true
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

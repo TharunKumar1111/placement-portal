@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Job</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>Admin Panel</h2>
+
+    <div>
+        <a href="/admin">Dashboard</a>
+        <a href="/applicants">Applicants</a>
+        <a href="/admin_logout">Logout</a>
+    </div>
+
+</div>
+
+<div style="text-align:center; margin-top:20px;">
+
+    <button onclick="darkMode()" style="width:200px;">
+        Dark Mode
+    </button>
+
+</div>
+
+<h1>Edit Job</h1>
+
+<div class="box">
+
+    <form method="POST" action="/edit_job/{{ job[0] }}"></form>
+
+        <input type="text"
+        name="company"
+        value="{{ job[1] }}"
+        required>
+
+        <input type="text"
+        name="role"
+        value="{{ job[2] }}"
+        required>
+
+        <input type="text"
+        name="package"
+        value="{{ job[3] }}"
+        required>
+
+        <input type="date"
+        name="deadline"
+        value="{{ job[5] }}"
+        required>
+
+        <button type="submit">
+            Update Job
+        </button>
+
+    </form>
+
+    <a href="/admin">
+        <button>Back to Admin</button>
+    </a>
+
+</div>
+
+<footer>
+    Developed by Tharun
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Success</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div style="text-align:right; padding:20px;">
+
+    <button onclick="darkMode()" class="dark-btn">
+        Dark Mode
+    </button>
+
+</div>
+
+<h1>College Placement Portal</h1>
+
+<div class="box">
+
+    <h2>Application Submitted 🎉</h2>
+
+    <p>Your application has been submitted successfully.</p>
+
+    <a href="/my_applications">
+        <button>View My Applications</button>
+    </a>
+
+    <a href="/dashboard">
+        <button>Back to Dashboard</button>
+    </a>
+
+</div>
+
+<footer>
+    Developed by Tharun
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

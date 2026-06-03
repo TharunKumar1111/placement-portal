@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>Placement Portal</h2>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/jobs">Jobs</a>
+        <a href="/saved_jobs">Saved Jobs</a>
+        <a href="/my_applications">Applications</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+
+        <button onclick="darkMode()" class="dark-btn">
+            🌙
+        </button>
+    </div>
+
+</div>
+
+<h1>Student Profile</h1>
+
+<div class="box">
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="flash">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+    <div class="job-card">
+        {% if student[5] %}
+
+    <img
+    src="{{ url_for('static',
+    filename='profile_photos/' + student[5]) }}"
+    width="120"
+    style="border-radius:50%;">
+
+{% endif %}
+
+        <h3>{{ student[1] }}</h3>
+
+        <p>Email: {{ student[2] }}</p>
+
+        <p>Total Applications: {{ total }}</p>
+
+    </div>
+
+    <h2>My Skills</h2>
+
+    <form method="POST"
+action="/profile"
+enctype="multipart/form-data">
+
+        <input type="text"
+        name="skills"
+        value="{{ student[4] if student[4] else '' }}"
+        placeholder="Example: HTML, CSS, JavaScript, Python, Flask"
+        required>
+        <input type="file"
+name="profile_photo"
+accept="image/*">
+
+        <button type="submit">
+            Save Skills
+        </button>
+
+    </form>
+
+</div>
+
+<footer>
+    Developed by Tharun
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

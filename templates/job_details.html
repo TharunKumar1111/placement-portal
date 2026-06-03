@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Details</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>Placement Portal</h2>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/jobs">Jobs</a>
+        <a href="/saved_jobs">Saved Jobs</a>
+        <a href="/my_applications">Applications</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+
+        <button onclick="darkMode()" class="dark-btn">
+            🌙
+        </button>
+    </div>
+
+</div>
+
+<h1>Job Details</h1>
+
+<div class="box">
+
+    <div class="job-card">
+
+        <h3>{{ job[1] }}</h3>
+
+        <p>Role: {{ job[2] }}</p>
+
+        <p>Package: {{ job[3] }}</p>
+
+        <p>Deadline: {{ job[5] }}</p>
+
+        <p>Total Applicants: {{ job[6] }}</p>
+
+        <a href="/jobs">
+            <button type="button">
+                Back to Jobs
+            </button>
+        </a>
+
+    </div>
+
+</div>
+
+<footer>
+    Developed by Tharun
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
