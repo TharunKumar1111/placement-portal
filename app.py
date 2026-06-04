@@ -4,6 +4,9 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
+
+os.makedirs("uploads", exist_ok=True)
+os.makedirs("static/profile_photos", exist_ok=True)
 app.secret_key = "placementportal"
 
 UPLOAD_FOLDER = 'uploads'
